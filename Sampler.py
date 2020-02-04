@@ -110,7 +110,8 @@ class Audio:
 
 sp = Sampler()
 
-# Example for Sampling Preset 'A1' of Clavia Nord Drum 3P all 6 Pads at 44.1 KHz with 127 Velocity Levels
+# Example for Sampling Preset 'A1' of Clavia Nord Drum 3P all 6 Pads
+# at 44.1 KHz with 127 Velocity Levels. Results in 762 Files approx. 100MB
 sp.samplePreset(preset=[0, 0], presetname='A1', note=0)
 sp.samplePreset(preset=[0, 0], presetname='A1', note=1)
 sp.samplePreset(preset=[0, 0], presetname='A1', note=2)
