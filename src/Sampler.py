@@ -7,10 +7,6 @@ import time
 import rtmidi
 import mido
 
-'''
-Todo:
-- Fix if Signal is to low; eg. A2 Note 7 Velocity 1
-'''
 
 class Sampler:
 
@@ -93,13 +89,13 @@ class Audio:
 
         def callback(indata, frames, timeCFFI, status):
             peak=np.average(np.abs(indata))*32*64
-            if peak>=.5:
+            if peak>=.4:
                 self.startRecord=True
             if self.startRecord:
                 self.q.put(indata.copy())
             bars="#"*int(128*64*peak/2**16)
             print('%s %s %s %04d %05d %s'%(fileprefix, note, velocity, frames, peak, bars))
-            if peak<.5:
+            if peak<.4:
                 self.slagTime -= 1
                 if self.slagTime == 0:
                     self.record = False
