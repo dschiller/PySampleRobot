@@ -18,5 +18,5 @@ Automatically record external Gear like Sampler, Synth, Groovebox, Rompler etc. 
 ![Example Recording Excerpt](RecordingExcerpt.gif?raw=true "Example Recording Excerpt")
 
 Todo:
-- Add Scripts to create Native Instruments Kontakt Instruments
+- Add Scripts to create Native Instruments Kontakt Instruments with the recorded Samples
 
