@@ -89,13 +89,13 @@ class Audio:
 
         def callback(indata, frames, timeCFFI, status):
             peak=np.average(np.abs(indata))*32*64
-            if peak>=.4:
+            if peak>=.2:
                 self.startRecord=True
             if self.startRecord:
                 self.q.put(indata.copy())
             bars="#"*int(128*64*peak/2**16)
             print('%s %s %s %04d %05d %s'%(fileprefix, note, velocity, frames, peak, bars))
-            if peak<.4:
+            if peak<.2:
                 self.slagTime -= 1
                 if self.slagTime == 0:
                     self.record = False
