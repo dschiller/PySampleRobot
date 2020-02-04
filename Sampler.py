@@ -109,13 +109,14 @@ class Audio:
 
 sp = Sampler()
 
-# Example for Sampling Preset 'A1' of Clavia Nord Drum 3P all 6 Pads
+# Example for Sampling Presets 'A1' to 'A50' of Clavia Nord Drum 3P all 6 Pads
 # at 44.1 KHz, 16 Bit, Stereo with 127 Velocity Levels. Results in 762 Files,
-# 127 MB. Automatic Recording Time 17 Minutes.
+# 127 MB per Preset ( x 50 ). Automatic Recording Time 17 Minutes per Preset ( x 50 ).
 
-sp.samplePreset(preset=[0, 0], presetname='A1', note=0)
-sp.samplePreset(preset=[0, 0], presetname='A1', note=1)
-sp.samplePreset(preset=[0, 0], presetname='A1', note=2)
-sp.samplePreset(preset=[0, 0], presetname='A1', note=8)
-sp.samplePreset(preset=[0, 0], presetname='A1', note=7)
-sp.samplePreset(preset=[0, 0], presetname='A1', note=10)
+for preset in range(0, 50):
+    sp.samplePreset(preset=[0, preset], presetname='A%s'%(preset+1), note=0)
+    sp.samplePreset(preset=[0, preset], presetname='A%s'%(preset+1), note=1)
+    sp.samplePreset(preset=[0, preset], presetname='A%s'%(preset+1), note=2)
+    sp.samplePreset(preset=[0, preset], presetname='A%s'%(preset+1), note=8)
+    sp.samplePreset(preset=[0, preset], presetname='A%s'%(preset+1), note=7)
+    sp.samplePreset(preset=[0, preset], presetname='A%s'%(preset+1), note=10)
