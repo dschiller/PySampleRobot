@@ -3,7 +3,7 @@ Automatically record external Gear like Sampler, Synth, Groovebox, Rompler etc. 
 
 ## Shema
 
-![Schema](Diagram.png?raw=true "Schema")
+![Schema](SchemaDiagram.png?raw=true "Schema")
 
 ## Example Excerpt of Sampling Clavia Nord Drum 3P Preset A1 / A2
 
