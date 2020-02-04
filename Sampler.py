@@ -7,6 +7,10 @@ import time
 import rtmidi
 import mido
 
+'''
+Todo:
+- Fix if Signal is to low; eg. A2 Note 7 Velocity 1
+'''
 
 class Sampler:
 
@@ -111,7 +115,7 @@ sp = Sampler()
 
 # Example for Sampling Presets 'A1' to 'A50' of Clavia Nord Drum 3P all 6 Pads
 # at 44.1 KHz, 16 Bit, Stereo with 127 Velocity Levels. Results in 762 Files,
-# 127 MB to 300 MB per Preset ( x 50 ). Automatic Recording Time 17 to 30 Minutes
+# 127 to 300 MB per Preset ( x 50 ). Automatic Recording Time 17 to 30 Minutes
 # per Preset ( x 50 ).
 
 for preset in range(0, 50):
