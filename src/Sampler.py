@@ -111,8 +111,8 @@ sp = Sampler()
 
 # Example for Sampling Presets 'A1' to 'A50' of Clavia Nord Drum 3P all 6 Pads
 # at 44.1 KHz, 16 Bit, Stereo with 127 Velocity Levels. Results in 762 Files
-# per Preset ( x 50 ), 127 to 300 MB per Preset ( x 50 ). Automatic Recording
-# Time 17 to 30 Minutes per Preset ( x 50 ).
+# per Preset ( x 50 ), 50 to 500 MB per Preset ( x 50 ). Automatic Recording
+# Time 15 to 60 Minutes per Preset ( x 50 ).
 
 for preset in range(0, 50):
     sp.samplePreset(preset=[0, preset], presetname='A%s'%(preset+1), note=0)
