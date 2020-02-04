@@ -6,7 +6,6 @@ import os
 import time
 import rtmidi
 import mido
-import librosa
 
 
 class Sampler:
