@@ -1,12 +1,7 @@
-import queue
+import queue, os, time, rtmidi, mido, librosa, keyboard
 import sounddevice as sd
 import soundfile as sf
 import numpy as np
-import os
-import time
-import rtmidi
-import mido
-import librosa
 
 
 class Sampler:
@@ -97,6 +92,11 @@ class Audio:
         self.startRecord = False
 
         def callback(indata, frames, timeCFFI, status):
+                
+            if keyboard.is_pressed('Esc'):
+                print("\nYou pressed Esc, so exiting...")
+                os._exit(1)
+
             peak=np.average(np.abs(indata))*32*64
             if peak>=.2:
                 self.startRecord=True
@@ -117,10 +117,9 @@ class Audio:
         
         # y, sr = librosa.load(file, mono=False, sr=None)
         # yt, index = librosa.effects.trim(y)
-        # sf.write(file, yt.T, sd.default.samplerate, self.subtype)
+        # sf.write(file, yt.T, sd.default.samplerate, subtype=self.subtype)
 
-
-sp = Sampler(midiDevice='USB Midi 4i4o', audioDevice='ZOOM L-12 ASIO Driver', sampleRate=44100, bitDepth=16, inputChannels=[4, 5])
+sp = Sampler(midiDevice='USB Midi 4i4o', audioDevice='MOTU Audio ASIO', sampleRate=44100, bitDepth=24, inputChannels=[3, 4])
 
 '''
 EXAMPLE - Clavia Nord Drum 3P
