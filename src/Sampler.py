@@ -88,7 +88,7 @@ class Audio:
 
         self.q = queue.Queue()
         self.record = True
-        self.slagTime = 35 * 1
+        self.slagTime = 35 * 3
         self.startRecord = False
 
         def callback(indata, frames, timeCFFI, status):
@@ -119,7 +119,7 @@ class Audio:
         # yt, index = librosa.effects.trim(y)
         # sf.write(file, yt.T, sd.default.samplerate, subtype=self.subtype)
 
-sp = Sampler(midiDevice='USB Midi 4i4o', audioDevice='MOTU Audio ASIO', sampleRate=192000, bitDepth=32, inputChannels=[3, 4])
+sp = Sampler(midiDevice='USB Midi 4i4o', audioDevice='MOTU Audio ASIO', sampleRate=44100, bitDepth=24, inputChannels=[3, 4])
 
 '''
 EXAMPLE - Clavia Nord Drum 3P
@@ -140,7 +140,7 @@ for bank in range(0, 4):
     if bank==3:
         bankLetter='D'
     for preset in range(0, 50):
-        sp.samplePreset(preset=[bank, preset], presetname='%s%s'%(bankLetter, preset+1), note=0)
+        # sp.samplePreset(preset=[bank, preset], presetname='%s%s'%(bankLetter, preset+1), note=0)
         sp.samplePreset(preset=[bank, preset], presetname='%s%s'%(bankLetter, preset+1), note=1)
         sp.samplePreset(preset=[bank, preset], presetname='%s%s'%(bankLetter, preset+1), note=2)
         sp.samplePreset(preset=[bank, preset], presetname='%s%s'%(bankLetter, preset+1), note=8)
