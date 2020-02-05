@@ -11,11 +11,11 @@ Automatically record external Gear like Sampler, Synth, Groovebox, Rompler etc. 
 
 - Set the two Soundcard Inputs which are connected with the two Audio Outputs of the Nord Drum 3P to full left and full right
 - Set the same Inputs to 0 dB on your Soundcard
+- Set the Nord Drum 3P Pads Threshold to 5 ( Otherwise it will play unwanted Notes if it is set to 4 or lower )
 #### Zoom L-12
 - Set the Main Volume on the Nord Drum 3P to 50 % ( Poti shows to the top ) otherwise there will be Clipping in some Recordings
 #### MOTU UltraLite MK3
 - Set the Main Volume on the Nord Drum 3P to 100 % ( Poti fully rotated right )
-- Set the Nord Drum 3P Pads Threshold to 5 ( Otherwise it will play unwanted Notes if it is set to 4 or lower )
 
 ### Structure of the Sampleprcess Output
 
