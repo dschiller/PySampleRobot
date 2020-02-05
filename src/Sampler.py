@@ -120,7 +120,7 @@ class Audio:
         # sf.write(file, yt.T, sd.default.samplerate, self.subtype)
 
 
-sp = Sampler(midiDevice='USB Midi 4i4o', audioDevice='ZOOM L-12 ASIO Driver', sampleRate=96000, bitDepth=32, inputChannels=[4, 5])
+sp = Sampler(midiDevice='USB Midi 4i4o', audioDevice='ZOOM L-12 ASIO Driver', sampleRate=44100, bitDepth=16, inputChannels=[4, 5])
 
 '''
 EXAMPLE - Clavia Nord Drum 3P
