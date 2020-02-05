@@ -6,6 +6,7 @@ import os
 import time
 import rtmidi
 import mido
+import librosa
 
 
 class Sampler:
@@ -113,9 +114,13 @@ class Audio:
                 self.md.sendNote(channel, note, velocity)
                 while self.record:
                     f.write(self.q.get())
+        
+        # y, sr = librosa.load(file, mono=False, sr=None)
+        # yt, index = librosa.effects.trim(y)
+        # sf.write(file, yt.T, sd.default.samplerate, self.subtype)
 
 
-sp = Sampler(midiDevice='USB Midi 4i4o', audioDevice='ZOOM L-12 ASIO Driver', sampleRate=44100, bitDepth=24, inputChannels=[4, 5])
+sp = Sampler(midiDevice='USB Midi 4i4o', audioDevice='ZOOM L-12 ASIO Driver', sampleRate=96000, bitDepth=32, inputChannels=[4, 5])
 
 '''
 EXAMPLE - Clavia Nord Drum 3P
