@@ -119,7 +119,7 @@ class Audio:
         # yt, index = librosa.effects.trim(y)
         # sf.write(file, yt.T, sd.default.samplerate, subtype=self.subtype)
 
-sp = Sampler(midiDevice='USB Midi 4i4o', audioDevice='MOTU Audio ASIO', sampleRate=44100, bitDepth=24, inputChannels=[3, 4])
+sp = Sampler(midiDevice='USB Midi 4i4o', audioDevice='MOTU Audio ASIO', sampleRate=192000, bitDepth=32, inputChannels=[3, 4])
 
 '''
 EXAMPLE - Clavia Nord Drum 3P
