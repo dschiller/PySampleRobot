@@ -89,7 +89,9 @@ class Audio:
         self.q = queue.Queue()
         self.record = True
         self.slagTime = 35 * 3
+        self.thresholdStart = False
         self.startRecord = False
+        self.timeStart = time.time()
 
         def callback(indata, frames, timeCFFI, status):
                 
@@ -98,13 +100,17 @@ class Audio:
                 os._exit(1)
 
             peak=np.average(np.abs(indata))*32*64
-            if peak>=.2:
-                self.startRecord=True
-            if self.startRecord:
+            if self.thresholdStart:
+                if peak>=.1:
+                    self.startRecord=True
+                if self.startRecord:
+                    self.q.put(indata.copy())
+            else:
                 self.q.put(indata.copy())
             bars="#"*int(128*64*peak/2**16)
-            print('%s %s %s %04d %05d %s'%(fileprefix, note, velocity, frames, peak, bars))
-            if peak<.2:
+            timeDiff = round((time.time() - self.timeStart) * 1000)
+            print('  Preset %s - Channel %s - Note %s - Velocity %s - Device %s - Input Channels %s - Sample Rate %s - Bit Depth %s - Sample Time %sms - Used Frames %04d - Peak %05d %s'%(fileprefix, channel+1, note, velocity, sd.default.device[0], self.inputChannels, self.samplerate, self.subtype, timeDiff, frames, peak, bars))
+            if peak<.1:
                 self.slagTime -= 1
                 if self.slagTime == 0:
                     self.record = False
@@ -120,6 +126,16 @@ class Audio:
         # sf.write(file, yt.T, sd.default.samplerate, subtype=self.subtype)
 
 sp = Sampler(midiDevice='USB Midi 4i4o', audioDevice='MOTU Audio ASIO', sampleRate=44100, bitDepth=24, inputChannels=[3, 4])
+
+# ###########################################
+# # Debugging
+# ###########################################
+# bank=0
+# bankLetter='A'
+# preset=1
+# note=10
+# sp.samplePreset(preset=[bank, preset], presetname='%s%s'%(bankLetter, preset), note=note)
+# exit()
 
 '''
 EXAMPLE - Clavia Nord Drum 3P
@@ -140,7 +156,7 @@ for bank in range(0, 4):
     if bank==3:
         bankLetter='D'
     for preset in range(0, 50):
-        # sp.samplePreset(preset=[bank, preset], presetname='%s%s'%(bankLetter, preset+1), note=0)
+        sp.samplePreset(preset=[bank, preset], presetname='%s%s'%(bankLetter, preset+1), note=0)
         sp.samplePreset(preset=[bank, preset], presetname='%s%s'%(bankLetter, preset+1), note=1)
         sp.samplePreset(preset=[bank, preset], presetname='%s%s'%(bankLetter, preset+1), note=2)
         sp.samplePreset(preset=[bank, preset], presetname='%s%s'%(bankLetter, preset+1), note=8)
