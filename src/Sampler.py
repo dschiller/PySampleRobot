@@ -1,4 +1,4 @@
-import queue, os, time, rtmidi, mido, librosa, keyboard
+import queue, os, time, rtmidi, mido, keyboard, librosa
 import sounddevice as sd
 import soundfile as sf
 import numpy as np
@@ -7,6 +7,8 @@ import numpy as np
 class Sampler:
 
     def __init__(self, midiDevice, audioDevice, sampleRate=44100, bitDepth=16, inputChannels=[1, 2]):
+        keyboard.add_hotkey('esc', lambda: self.quit())
+        self.audioDevice = audioDevice
         inputChannels[0]-=1
         inputChannels[1]-=1
         if bitDepth==16:
@@ -18,10 +20,17 @@ class Sampler:
         self.md = MIDI(midiDevice)
         self.ad = Audio(device=audioDevice, samplerate=sampleRate, channels=2, inputChannels=inputChannels, subtype=bitDepth, midi=self.md)
 
-    def samplePreset(self, preset, presetname, note):
+    def quit(self):
+        print('\nPressed ESC - Exit..')
+        os._exit(1)
+
+    def samplePreset(self, preset, presetname, note, velocity=None):
         self.md.setBank(preset[0])
         self.md.setProgram(preset[1])
-        for velocity in range(1, 128):
+        if velocity is None:
+            for velocity in range(1, 128):
+                self.ad.sampleNote(channel=0, note=note, velocity=velocity, fileprefix=presetname, folder=presetname, subfolder='note_%s'%note)
+        else:
             self.ad.sampleNote(channel=0, note=note, velocity=velocity, fileprefix=presetname, folder=presetname, subfolder='note_%s'%note)
 
 class MIDI:
@@ -94,11 +103,6 @@ class Audio:
         self.timeStart = time.time()
 
         def callback(indata, frames, timeCFFI, status):
-                
-            if keyboard.is_pressed('Esc'):
-                print("\nYou pressed Esc, so exiting...")
-                os._exit(1)
-
             peak=np.average(np.abs(indata))*32*64
             if self.thresholdStart:
                 if peak>=.1:
@@ -120,21 +124,23 @@ class Audio:
                 self.md.sendNote(channel, note, velocity)
                 while self.record:
                     f.write(self.q.get())
-        
+
         # y, sr = librosa.load(file, mono=False, sr=None)
-        # yt, index = librosa.effects.trim(y)
-        # sf.write(file, yt.T, sd.default.samplerate, subtype=self.subtype)
+        # yt, index = librosa.effects.trim(y, top_db=30)
+        # sf.write(file.split('.')[0]+'2.wav', yt.T, sd.default.samplerate,subtype=self.subtype)
+        
 
 sp = Sampler(midiDevice='USB Midi 4i4o', audioDevice='MOTU Audio ASIO', sampleRate=44100, bitDepth=24, inputChannels=[3, 4])
 
 # ###########################################
 # # Debugging
 # ###########################################
+# bankLetter=['A', 'B', 'C', 'D']
 # bank=0
-# bankLetter='A'
 # preset=1
-# note=10
-# sp.samplePreset(preset=[bank, preset], presetname='%s%s'%(bankLetter, preset), note=note)
+# note=1
+# velocity=127
+# sp.samplePreset(preset=[bank, preset], presetname='%s%s'%(bankLetter[bank], preset), note=note, velocity=velocity)
 # exit()
 
 '''
@@ -147,18 +153,11 @@ Time 15 to 60 Minutes per Preset ( x 50 x 4 ).
 '''
 
 for bank in range(0, 4):
-    if bank==0:
-        bankLetter='A'
-    if bank==1:
-        bankLetter='B'
-    if bank==2:
-        bankLetter='C'
-    if bank==3:
-        bankLetter='D'
+    bankLetter=['A', 'B', 'C', 'D']
     for preset in range(0, 50):
-        sp.samplePreset(preset=[bank, preset], presetname='%s%s'%(bankLetter, preset+1), note=0)
-        sp.samplePreset(preset=[bank, preset], presetname='%s%s'%(bankLetter, preset+1), note=1)
-        sp.samplePreset(preset=[bank, preset], presetname='%s%s'%(bankLetter, preset+1), note=2)
-        sp.samplePreset(preset=[bank, preset], presetname='%s%s'%(bankLetter, preset+1), note=8)
-        sp.samplePreset(preset=[bank, preset], presetname='%s%s'%(bankLetter, preset+1), note=7)
-        sp.samplePreset(preset=[bank, preset], presetname='%s%s'%(bankLetter, preset+1), note=10)
+        sp.samplePreset(preset=[bank, preset], presetname='%s%s'%(bankLetter[bank], preset+1), note=0)
+        sp.samplePreset(preset=[bank, preset], presetname='%s%s'%(bankLetter[bank], preset+1), note=1)
+        sp.samplePreset(preset=[bank, preset], presetname='%s%s'%(bankLetter[bank], preset+1), note=2)
+        sp.samplePreset(preset=[bank, preset], presetname='%s%s'%(bankLetter[bank], preset+1), note=8)
+        sp.samplePreset(preset=[bank, preset], presetname='%s%s'%(bankLetter[bank], preset+1), note=7)
+        sp.samplePreset(preset=[bank, preset], presetname='%s%s'%(bankLetter[bank], preset+1), note=10)
