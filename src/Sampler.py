@@ -6,6 +6,7 @@ import os
 import time
 import rtmidi
 import mido
+import librosa
 
 
 class Sampler:
@@ -113,12 +114,16 @@ class Audio:
                 self.md.sendNote(channel, note, velocity)
                 while self.record:
                     f.write(self.q.get())
+        
+        y, sr = librosa.load(file, mono=False)
+        yt, index = librosa.effects.trim(y)
+        sf.write(file, yt.T, sd.default.samplerate, self.subtype)
 
 
 sp = Sampler(midiDevice='USB Midi 4i4o', audioDevice='ZOOM L-12 ASIO Driver', sampleRate=44100, bitDepth=24, inputChannels=[4, 5])
 
 '''
-EXAMPLE - Clavia Nord Drum 3P 
+EXAMPLE - Clavia Nord Drum 3P
 
 Example for Sampling Presets 'A1' to 'D50' of Clavia Nord Drum 3P all 6 Pads
 at 44.1 KHz, 24 Bit, Stereo with 127 Velocity Levels. Results in 762 Files
