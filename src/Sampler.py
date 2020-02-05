@@ -10,9 +10,17 @@ import mido
 
 class Sampler:
 
-    def __init__(self):
-        self.md = MIDI('USB Midi 4i4o')
-        self.ad = Audio(device=16, samplerate=44100, channels=2, inputChannels=[3, 4], subtype='PCM_16', midi=self.md)
+    def __init__(self, midiDevice, audioDevice, sampleRate=44100, bitDepth=16, inputChannels=[1, 2]):
+        inputChannels[0]-=1
+        inputChannels[1]-=1
+        if bitDepth==16:
+            bitDepth='PCM_16'
+        if bitDepth==24:
+            bitDepth='PCM_24'
+        if bitDepth==32:
+            bitDepth='PCM_32'
+        self.md = MIDI(midiDevice)
+        self.ad = Audio(device=audioDevice, samplerate=sampleRate, channels=2, inputChannels=inputChannels, subtype=bitDepth, midi=self.md)
 
     def samplePreset(self, preset, presetname, note):
         self.md.setBank(preset[0])
@@ -107,17 +115,30 @@ class Audio:
                     f.write(self.q.get())
 
 
-sp = Sampler()
+sp = Sampler(midiDevice='USB Midi 4i4o', audioDevice='ZOOM L-12 ASIO Driver', sampleRate=44100, bitDepth=24, inputChannels=[4, 5])
 
-# Example for Sampling Presets 'A1' to 'A50' of Clavia Nord Drum 3P all 6 Pads
-# at 44.1 KHz, 16 Bit, Stereo with 127 Velocity Levels. Results in 762 Files
-# per Preset ( x 50 ), 50 to 500 MB per Preset ( x 50 ). Automatic Recording
-# Time 15 to 60 Minutes per Preset ( x 50 ).
+'''
+EXAMPLE - Clavia Nord Drum 3P 
 
-for preset in range(0, 50):
-    sp.samplePreset(preset=[0, preset], presetname='A%s'%(preset+1), note=0)
-    sp.samplePreset(preset=[0, preset], presetname='A%s'%(preset+1), note=1)
-    sp.samplePreset(preset=[0, preset], presetname='A%s'%(preset+1), note=2)
-    sp.samplePreset(preset=[0, preset], presetname='A%s'%(preset+1), note=8)
-    sp.samplePreset(preset=[0, preset], presetname='A%s'%(preset+1), note=7)
-    sp.samplePreset(preset=[0, preset], presetname='A%s'%(preset+1), note=10)
+Example for Sampling Presets 'A1' to 'D50' of Clavia Nord Drum 3P all 6 Pads
+at 44.1 KHz, 24 Bit, Stereo with 127 Velocity Levels. Results in 762 Files
+per Preset ( x 50 x 4 ), 50 to 500 MB per Preset ( x 50 x 4 ). Automatic Recording
+Time 15 to 60 Minutes per Preset ( x 50 x 4 ).
+'''
+
+for bank in range(0, 4):
+    if bank==0:
+        bankLetter='A'
+    if bank==1:
+        bankLetter='B'
+    if bank==2:
+        bankLetter='C'
+    if bank==3:
+        bankLetter='D'
+    for preset in range(0, 50):
+        sp.samplePreset(preset=[bank, preset], presetname='%s%s'%(bankLetter, preset+1), note=0)
+        sp.samplePreset(preset=[bank, preset], presetname='%s%s'%(bankLetter, preset+1), note=1)
+        sp.samplePreset(preset=[bank, preset], presetname='%s%s'%(bankLetter, preset+1), note=2)
+        sp.samplePreset(preset=[bank, preset], presetname='%s%s'%(bankLetter, preset+1), note=8)
+        sp.samplePreset(preset=[bank, preset], presetname='%s%s'%(bankLetter, preset+1), note=7)
+        sp.samplePreset(preset=[bank, preset], presetname='%s%s'%(bankLetter, preset+1), note=10)
