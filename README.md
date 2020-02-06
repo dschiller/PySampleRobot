@@ -15,7 +15,7 @@ Automatically record external Gear like Sampler, Synth, Groovebox, Rompler etc. 
 - Set the two Soundcard Inputs which are connected with the two Audio Outputs of the Nord Drum 3P to 0 dB on your Soundcard
 - Set the Main Volume on the Nord Drum 3P to 50 % ( Poti shows to the top ) otherwise there will be Clipping in some Recordings
 #### MOTU UltraLite MK3
-- Set the two Soundcard Inputs which are connected with the two Audio Outputs of the Nord Drum 3P to +10 dB on your Soundcard
+- Set the two Soundcard Inputs which are connected with the two Audio Outputs of the Nord Drum 3P to +5 dB on your Soundcard
   ( If you have Issues with low Level on the MOTU make a Factory Reset )
     1. Push the Setup/PARAM knob until the LCD screen reads "UL Hybrid Setup".
     2. Turn the Setup/PARAM knob until the LCD reads "Factory Defaults Push [VALUE]". Push the Value knob.
