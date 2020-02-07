@@ -23,7 +23,7 @@ Automatically record external Gear like Sampler, Synth, Groovebox, Rompler etc. 
     4. The LCD screen will read: "Initializing", and the LCD screen will return to "METER 48".
 - Set the Main Volume on the Nord Drum 3P to 100 % ( Poti fully rotated right )
 
-### Structure of the Sampleprcess Output
+### Structure of the Sampleprocess Output
 
 ``A1 10 120 0256 00001 ####``
 1. Preset Name
