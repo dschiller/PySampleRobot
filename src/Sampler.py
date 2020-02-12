@@ -150,6 +150,8 @@ Example for Sampling Presets 'A1' to 'D50' of Clavia Nord Drum 3P all 6 Pads
 at 44.1 KHz, 24 Bit, Stereo with 127 Velocity Levels. Results in 762 Files
 per Preset ( x 50 x 4 ), 50 to 500 MB per Preset ( x 50 x 4 ). Automatic Recording
 Time 15 to 60 Minutes per Preset ( x 50 x 4 ).
+
+Actual Result of this Example: 152.400 Samples, 68.7 GB, approx. 5 Days á 24 hours of Sampling
 '''
 
 for bank in range(0, 4):
