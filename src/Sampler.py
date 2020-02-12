@@ -7,7 +7,7 @@ import numpy as np
 class Sampler:
 
     def __init__(self, midiDevice, audioDevice, sampleRate=44100, bitDepth=16, inputChannels=[1, 2]):
-        keyboard.add_hotkey('esc', lambda: self.quit())
+        # keyboard.add_hotkey('esc', lambda: self.quit())  # Need to be fixed; Happens on all ESC Presses in the whole OS
         self.audioDevice = audioDevice
         inputChannels[0]-=1
         inputChannels[1]-=1
