@@ -37,4 +37,4 @@ Automatically record external Gear like Sampler, Synth, Groovebox, Rompler etc. 
 
 Todo:
 - Add Scripts to create Native Instruments Kontakt Instruments with the recorded Samples
-
+  Unfortunately NI doesn't provide an API for Kontakt so I need to use pywinauto / pyautogui
