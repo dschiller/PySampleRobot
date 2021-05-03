@@ -39,3 +39,6 @@ Todo:
 - Add Scripts to create Native Instruments Kontakt Instruments with the recorded Samples
   
   Unfortunately NI doesn't provide an API for Kontakt so I need to use pywinauto / pyautogui
+  
+  **Update**
+  - This is now possible with NI's Creator Tools
